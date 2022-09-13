@@ -21,7 +21,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @MicronautTest
-class IntegrationTests {
+class IntegrationTest {
 
     @Inject
     lateinit var application: EmbeddedApplication<*>
@@ -35,7 +35,7 @@ class IntegrationTests {
     @Test
     @DisplayName("test the findAll endpoint")
     fun test1() {
-        val expectedAsJson: String = IntegrationTests::class.java.getResource("/responses/artists.all.json").readText(Charsets.UTF_8)
+        val expectedAsJson: String = IntegrationTest::class.java.getResource("/responses/artists.all.json").readText(Charsets.UTF_8)
         val request: HttpRequest<Any> = HttpRequest.GET(endpoint)
         val response: HttpResponse<List<ArtistResponse>> = client.toBlocking().exchange(request, Argument.listOf(ArtistResponse::class.java))
         val expected: List<ArtistResponse> = mapper.readValue(expectedAsJson)
@@ -47,7 +47,7 @@ class IntegrationTests {
     @Test
     @DisplayName("test the find endpoint")
     fun test2() {
-        val expectedAsJson: String = IntegrationTests::class.java.getResource("/responses/artist.1.json").readText(Charsets.UTF_8)
+        val expectedAsJson: String = IntegrationTest::class.java.getResource("/responses/artist.1.json").readText(Charsets.UTF_8)
         val request: HttpRequest<Any> = HttpRequest.GET("${endpoint}/1")
         val response: HttpResponse<ArtistResponse> = client.toBlocking().exchange(request, Argument.of(ArtistResponse::class.java))
         val expected: ArtistResponse = mapper.readValue(expectedAsJson)
