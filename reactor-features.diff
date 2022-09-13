@@ -1,0 +1,39 @@
+--- micronaut-cli.yml
++++ micronaut-cli.yml
+@@ -3,4 +3,4 @@
+ testFramework: junit
+ sourceLanguage: kotlin
+ buildTool: gradle
+-features: [annotation-api, app-name, gradle, http-client, jackson-databind, junit, kotlin, kotlin-application, kotlin-build, logback, micronaut-build, netty-server, readme, shade, yaml]
++features: [annotation-api, app-name, gradle, http-client, jackson-databind, junit, kotlin, kotlin-application, kotlin-build, logback, micronaut-build, netty-server, reactor, reactor-http-client, readme, shade, yaml]
+
+
+--- build.gradle
++++ build.gradle
+@@ -18,6 +18,8 @@
+     implementation("io.micronaut:micronaut-http-client")
+     implementation("io.micronaut:micronaut-jackson-databind")
+     implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
++    implementation("io.micronaut.reactor:micronaut-reactor")
++    implementation("io.micronaut.reactor:micronaut-reactor-http-client")
+     implementation("jakarta.annotation:jakarta.annotation-api")
+     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+
+
+--- README.md
++++ README.md
+@@ -7,6 +7,11 @@
+ ---
+ 
+ - [Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)
++## Feature reactor documentation
++
++- [Micronaut Reactor documentation](https://micronaut-projects.github.io/micronaut-reactor/snapshot/guide/index.html)
++
++
+ ## Feature http-client documentation
+ 
+ - [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
+
+

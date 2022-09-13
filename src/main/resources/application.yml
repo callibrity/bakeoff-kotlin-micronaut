@@ -1,0 +1,18 @@
+micronaut:
+  application:
+    name: bakeoff
+datasources:
+  default:
+    url: ${JDBC_URL:`jdbc:postgresql://localhost:5432/artists`}
+    username: ${JDBC_USER:user1}
+    password: ${JDBC_PASSWORD:passwd!}
+    driverClassName: org.postgresql.Driver
+    dialect: POSTGRES
+flyway:
+  datasources:
+    default:
+      enabled: false
+netty:
+  default:
+    allocator:
+      max-order: 3

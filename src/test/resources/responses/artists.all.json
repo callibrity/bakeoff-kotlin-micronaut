@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "Lady Gaga",
+    "genre": "Pop"
+  },
+  {
+    "id": 2,
+    "name": "Rihanna",
+    "genre": "Pop"
+  },
+  {
+    "id": 3,
+    "name": "Britney Spears",
+    "genre": "R&B"
+  },
+  {
+    "id": 4,
+    "name": "Lana Del Rey",
+    "genre": "Pop"
+  }
+]

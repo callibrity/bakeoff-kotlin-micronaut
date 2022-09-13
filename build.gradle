@@ -1,0 +1,103 @@
+plugins {
+    id("org.jetbrains.kotlin.jvm") version "1.6.21"
+    id("org.jetbrains.kotlin.kapt") version "1.6.21"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.6.21"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.5.3"
+    id("io.micronaut.test-resources") version "3.5.3"
+//    id("io.micronaut.library") version '1.3.2'
+}
+
+version = "0.1"
+group = "io.callibrity.labs"
+
+ext {
+    postgresVersion = "42.4.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    kapt("io.micronaut.data:micronaut-data-processor")
+    kapt("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("io.micronaut.kotlin:micronaut-kotlin-runtime")
+    implementation("io.micronaut.data:micronaut-data-jdbc")
+    implementation("io.micronaut.sql:micronaut-jdbc-hikari")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation("io.micronaut:micronaut-validation")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    runtimeOnly("org.postgresql:postgresql:$postgresVersion")
+    implementation("io.micronaut.flyway:micronaut-flyway")
+//    testImplementation("io.cucumber:cucumber-java:7.7.0")
+//    testImplementation("io.cucumber:cucumber-junit:7.7.0")
+    // testImplementation("io.cucumber:cucumber-junit-platform-engine:7.7.0")
+//    testImplementation("org.junit.platform:junit-platform-suite:latest.release")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:latest.release")
+//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+//    testImplementation("io.cucumber:cucumber-picocontainer:latest.release") // is this needed?
+    testRuntimeOnly("com.h2database:h2")
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
+}
+
+application {
+    mainClass.set("io.callibrity.labs.bakeoff.ApplicationKt")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+}
+
+tasks {
+    compileKotlin {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
+    }
+    compileTestKotlin {
+        kotlinOptions {
+            jvmTarget = "11"
+        }
+    }
+    test {
+        useJUnitPlatform()
+
+        // OPTIONAL: Ignore test failures so that build pipelines won't get blocked by failing examples/scenarios
+        ignoreFailures = true
+        // OPTIONAL: Copy all system properties from the command line (-D...) to the test environment
+        systemProperties(project.gradle.startParameter.systemPropertiesArgs)
+        // OPTIONAL: Enable parallel test execution
+        systemProperty("cucumber.execution.parallel.enabled", true)
+        // OPTIONAL: Set parallel execution strategy (defaults to dynamic)
+        systemProperty("cucumber.execution.parallel.config.strategy", "fixed")
+        // OPTIONAL: Set the fixed number of parallel test executions. Only works for the "fixed" strategy defined above
+        systemProperty("cucumber.execution.parallel.config.fixed.parallelism", 4)
+        // OPTIONAL: Enable Cucumber plugins, enable/disable as desired
+        systemProperty("cucumber.plugin", "message:build/reports/cucumber.ndjson, timeline:build/reports/timeline, html:build/reports/cucumber.html")
+        // OPTIONAL: Improve readability of test names in reports
+        systemProperty("cucumber.junit-platform.naming-strategy", "long")
+        // OPTIONAL: Don't show Cucumber ads
+        systemProperty("cucumber.publish.quiet", "true")
+        // OPTIONAL: Force test execution even if they are up-to-date according to Gradle
+        outputs.upToDateWhen { false }
+    }
+}
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("io.callibrity.labs.*")
+    }
+    version = "3.6.3"
+}
+
+
+
