@@ -65,7 +65,7 @@ class IntegrationTest {
     @Test
     @DisplayName("save an artist, update the artist, delete the artist")
     fun test3() {
-        val requestCreate: HttpRequest<Any> = HttpRequest.POST(endpoint, ArtistRequest("David Bowie", Genre.POP))
+        val requestCreate: HttpRequest<Any> = HttpRequest.POST(endpoint, ArtistRequest("David Bowie", Genre.Pop))
         val responseCreated: HttpResponse<ArtistResponse> = client.toBlocking().exchange(requestCreate, Argument.of(ArtistResponse::class.java))
         val artistEndpoint = responseCreated.header(HttpHeaders.LOCATION)
 
@@ -79,7 +79,7 @@ class IntegrationTest {
         }
         assertEquals(HttpStatus.BAD_REQUEST, exCreatedFailed.getStatus())
 
-        val requestUpdate: HttpRequest<Any> = HttpRequest.PUT(artistEndpoint, ArtistRequest("David Bowie, the angel", Genre.WESTERN))
+        val requestUpdate: HttpRequest<Any> = HttpRequest.PUT(artistEndpoint, ArtistRequest("David Bowie, the angel", Genre.Western))
         val responseUpdated: HttpResponse<ArtistResponse> = client.toBlocking().exchange(requestUpdate, Argument.of(ArtistResponse::class.java))
 
         assertEquals(HttpStatus.OK, responseUpdated.status)
@@ -88,7 +88,7 @@ class IntegrationTest {
         val responseGetUpdatedArtist: HttpResponse<ArtistResponse> = client.toBlocking().exchange(requestGetUpdatedArtist, Argument.of(ArtistResponse::class.java))
 
         assertEquals("David Bowie, the angel", responseGetUpdatedArtist.body()?.name)
-        assertEquals(Genre.WESTERN.genre, responseGetUpdatedArtist.body()?.genre)
+        assertEquals(Genre.Western.genre, responseGetUpdatedArtist.body()?.genre)
 
         val requestDelete: HttpRequest<Any> = HttpRequest.DELETE(artistEndpoint)
         val responseDeleted: HttpResponse<ArtistResponse> = client.toBlocking().exchange(requestDelete)
