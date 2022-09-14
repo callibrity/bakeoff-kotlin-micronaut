@@ -82,7 +82,7 @@ class IntegrationTest {
         val requestUpdate: HttpRequest<Any> = HttpRequest.PUT(artistEndpoint, ArtistRequest("David Bowie, the angel", Genre.WESTERN))
         val responseUpdated: HttpResponse<ArtistResponse> = client.toBlocking().exchange(requestUpdate, Argument.of(ArtistResponse::class.java))
 
-        assertEquals(HttpStatus.NO_CONTENT, responseUpdated.status)
+        assertEquals(HttpStatus.OK, responseUpdated.status)
 
         val requestGetUpdatedArtist: HttpRequest<Any> = HttpRequest.GET(artistEndpoint)
         val responseGetUpdatedArtist: HttpResponse<ArtistResponse> = client.toBlocking().exchange(requestGetUpdatedArtist, Argument.of(ArtistResponse::class.java))
@@ -93,6 +93,6 @@ class IntegrationTest {
         val requestDelete: HttpRequest<Any> = HttpRequest.DELETE(artistEndpoint)
         val responseDeleted: HttpResponse<ArtistResponse> = client.toBlocking().exchange(requestDelete)
 
-        assertEquals(HttpStatus.NO_CONTENT, responseDeleted.getStatus())
+        assertEquals(HttpStatus.OK, responseDeleted.getStatus())
     }
 }

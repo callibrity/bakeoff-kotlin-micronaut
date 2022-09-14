@@ -39,11 +39,11 @@ open class ArtistApi(val service: ArtistService) {
     open fun update(@Valid @Body artist: ArtistRequest,
                     @PathVariable(name = "id") id: Long): HttpResponse<Long> {
         service.update(id, artist)
-        return HttpResponse.noContent<Long?>().header(HttpHeaders.LOCATION, "/api/artists/${id}")
+        return HttpResponse.ok<Long?>().header(HttpHeaders.LOCATION, "/api/artists/${id}")
     }
 
     @Delete(uri = "{id}")
-    @Status(HttpStatus.NO_CONTENT)
+    @Status(HttpStatus.OK)
     fun delete(@PathVariable(name = "id") id: Long) {
         service.delete(id)
     }
