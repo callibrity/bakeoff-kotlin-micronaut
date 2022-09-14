@@ -29,14 +29,14 @@ open class ArtistApi(val service: ArtistService) {
     }
 
     @Post()
-    open fun save(@Valid artist: ArtistRequest): HttpResponse<Long> {
+    open fun save(@Valid @Body artist: ArtistRequest): HttpResponse<Long> {
         val id = service.save(artist)
         val uri = UriBuilder.of("/api/artists/${id}").build()
         return HttpResponse.created(uri)
     }
 
     @Put(uri = "/{id}")
-    open fun update(@Valid artist: ArtistRequest,
+    open fun update(@Valid @Body artist: ArtistRequest,
                     @PathVariable(name = "id") id: Long): HttpResponse<Long> {
         service.update(id, artist)
         return HttpResponse.noContent<Long?>().header(HttpHeaders.LOCATION, "/api/artists/${id}")
