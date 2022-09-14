@@ -10,7 +10,7 @@ import io.micronaut.data.annotation.MappedEntity
 data class ArtistResponse(
     @field:Id
     @field:GeneratedValue(GeneratedValue.Type.AUTO)
-    val id: Long? = null,
+    val id: String? = null,
     val name: String,
     val genre: String
 )

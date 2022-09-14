@@ -1,11 +1,11 @@
 create table artist
 (
-    id    SERIAL PRIMARY KEY,
-    name  VARCHAR,
-    genre VARCHAR
+    id    VARCHAR(255) PRIMARY KEY,
+    name  VARCHAR(255),
+    genre VARCHAR(255)
 );
 
-insert into artist(name, genre) values ('Lady Gaga', 'Pop');
-insert into artist(name, genre) values ('Rihanna', 'Pop');
-insert into artist(name, genre) values ('Britney Spears', 'Pop');
-insert into artist(name, genre) values ('Lana Del Rey', 'Pop');
+insert into artist(id, name, genre) values ('1', 'Lady Gaga', 'Pop');
+insert into artist(id, name, genre) values ('2', 'Rihanna', 'Pop');
+insert into artist(id, name, genre) values ('3', 'Britney Spears', 'Pop');
+insert into artist(id, name, genre) values ('4', 'Lana Del Rey', 'Pop');

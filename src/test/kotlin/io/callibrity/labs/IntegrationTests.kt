@@ -69,7 +69,7 @@ class IntegrationTest {
         val responseCreated: HttpResponse<ArtistResponse> = client.toBlocking().exchange(requestCreate, Argument.of(ArtistResponse::class.java))
         val artistEndpoint = responseCreated.header(HttpHeaders.LOCATION)
 
-        assertEquals(HttpStatus.CREATED, responseCreated.getStatus())
+        assertEquals(HttpStatus.OK, responseCreated.getStatus())
         assertNotNull(artistEndpoint)
 
         // empty request body -- this will fail validation and a 400 BAD REQUEST status code will be returned

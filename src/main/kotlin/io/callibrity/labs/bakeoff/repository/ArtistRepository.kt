@@ -6,4 +6,4 @@ import io.micronaut.data.model.query.builder.sql.Dialect
 import io.micronaut.data.repository.PageableRepository
 
 @JdbcRepository(dialect = Dialect.POSTGRES)
-interface ArtistRepository : PageableRepository<Artist, Long>
+interface ArtistRepository : PageableRepository<Artist, String>

@@ -20,31 +20,35 @@ open class ArtistApi(val service: ArtistService) {
     @Produces(MediaType.APPLICATION_JSON)
     fun findAll(): List<ArtistResponse> {
         return service.findAll()
+            .map { ArtistResponse(it.id, it.name, it.genre) }
     }
 
     @Get(uri = "/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    fun findById(@PathVariable(name = "id") id: Long): Optional<ArtistResponse> {
+    fun findById(@PathVariable(name = "id") id: String): HttpResponse<ArtistResponse> {
         return service.findById(id)
+            .map { ArtistResponse(it.id, it.name, it.genre) }
+            .map { HttpResponse.ok(it) }
+            .orElse(HttpResponse.notFound())
     }
 
     @Post()
-    open fun save(@Valid @Body artist: ArtistRequest): HttpResponse<Long> {
-        val id = service.save(artist)
-        val uri = UriBuilder.of("/api/artists/${id}").build()
-        return HttpResponse.created(uri)
+    open fun save(@Valid @Body artist: ArtistRequest): HttpResponse<ArtistResponse> {
+        val saved = service.save(artist)
+        return HttpResponse.ok(ArtistResponse(saved.id, saved.name, saved.genre)).header(HttpHeaders.LOCATION, "/api/artists/${saved.id}")
     }
 
     @Put(uri = "/{id}")
     open fun update(@Valid @Body artist: ArtistRequest,
-                    @PathVariable(name = "id") id: Long): HttpResponse<Long> {
-        service.update(id, artist)
-        return HttpResponse.ok<Long?>().header(HttpHeaders.LOCATION, "/api/artists/${id}")
+                    @PathVariable(name = "id") id: String): HttpResponse<ArtistResponse> {
+        return service.update(id, artist)
+            .map { ArtistResponse(it.id, it.name, it.genre)  }
+            .map { HttpResponse.ok(it).header(HttpHeaders.LOCATION, "/api/artists/${id}") }
+            .orElse(HttpResponse.notFound())
     }
 
     @Delete(uri = "{id}")
-    @Status(HttpStatus.OK)
-    fun delete(@PathVariable(name = "id") id: Long) {
+    fun delete(@PathVariable(name = "id") id: String) {
         service.delete(id)
     }
 }
