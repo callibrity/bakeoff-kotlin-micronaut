@@ -3,9 +3,9 @@ micronaut:
     name: bakeoff
 datasources:
   default:
-    url: ${JDBC_URL:`jdbc:postgresql://localhost:5432/artists`}
-    username: ${JDBC_USER:user1}
-    password: ${JDBC_PASSWORD:passwd!}
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASS}
     driverClassName: org.postgresql.Driver
     dialect: POSTGRES
 flyway:
