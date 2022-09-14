@@ -65,6 +65,14 @@ tasks {
         }
     }
 }
+
+tasks.named<DockerBuildImage>("dockerBuild") {
+    images.add("docker.io/callibrity/$project.artifactId:$project.version")
+}
+
+tasks.named<DockerBuildImage>("dockerBuildNative") {
+    images.add("docker.io/callibrity/$project.artifactId:$project.version")
+}
 graalvmNative.toolchainDetection = false
 micronaut {
     runtime("netty")
