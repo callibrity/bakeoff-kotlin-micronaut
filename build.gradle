@@ -64,6 +64,10 @@ tasks {
             events "PASSED", "SKIPPED", "FAILED", "STANDARD_OUT", "STANDARD_ERROR"
         }
     }
+
+    dockerBuildNative {
+        images.add("docker.io/callibrity/bakeoff-kotlin-micronaut:$project.version")
+    }
 }
 
 
