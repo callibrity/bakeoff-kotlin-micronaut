@@ -65,8 +65,11 @@ tasks {
         }
     }
 
+    dockerBuild {
+        images.add("docker.io/callibrity/bakeoff-kotlin-micronaut:$project.version-jvm")
+    }
     dockerBuildNative {
-        images.add("docker.io/callibrity/bakeoff-kotlin-micronaut:$project.version")
+        images.add("docker.io/callibrity/bakeoff-kotlin-micronaut:$project.version-native")
     }
 }
 
