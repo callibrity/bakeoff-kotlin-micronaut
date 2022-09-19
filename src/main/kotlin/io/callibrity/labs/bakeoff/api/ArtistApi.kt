@@ -12,7 +12,6 @@ import io.micronaut.http.uri.UriBuilder
 import java.util.*
 import javax.validation.Valid
 
-// TODO: add Docker support
 @Controller("/api/artists")
 open class ArtistApi(val service: ArtistService) {
 
